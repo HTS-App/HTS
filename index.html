@@ -21,9 +21,10 @@
   #app{position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff;opacity:0;transition:opacity .35s}
   #app.ready{opacity:1}
   .splash{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;text-align:center;padding:24px;
-    background:radial-gradient(120% 90% at 85% 10%,rgba(84,232,170,.18),transparent 60%),linear-gradient(160deg,#08204E 0%,#0A3A6E 55%,#0B6F73 100%);transition:opacity .35s}
+    background:linear-gradient(180deg,rgba(6,20,52,.35),rgba(6,20,52,.15) 45%,rgba(6,20,52,.55)),url(img/bg.jpg) center/cover no-repeat,#08204E;transition:opacity .35s}
   .splash.hide{opacity:0;pointer-events:none}
-  .splash img{width:112px;height:112px;border-radius:26px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .logocard{background:#fff;border-radius:22px;padding:18px 22px;box-shadow:0 18px 44px rgba(0,0,0,.35)}
+  .logocard img{display:block;width:min(64vw,260px);height:auto}
   .splash h1{margin:6px 0 0;font-size:21px;font-weight:700;letter-spacing:.01em}
   .splash p{margin:0;font-size:13.5px;color:rgba(255,255,255,.75)}
   .bar{width:150px;height:4px;border-radius:4px;margin-top:8px;background:linear-gradient(90deg,transparent,#fff,transparent) 0 0/50% 100% no-repeat,rgba(255,255,255,.22);animation:bar 1.1s ease-in-out infinite}
@@ -44,10 +45,10 @@
 </head>
 <body>
 <div class="splash" id="splash">
-  <img src="icons/icon-512.png" alt="HTS">
+  <span class="logocard"><img src="img/logo-full.png" alt="Health Tecch Solutions"></span>
   <div>
     <h1 id="appName">HTS Service Manager</h1>
-    <p id="company">Health Tecch Solutions</p>
+    <p id="company">Carestream Service · LISAMED Sales</p>
   </div>
   <div class="bar" id="bar"></div>
   <div class="card" id="msg"></div>
@@ -68,7 +69,7 @@
   var url = String(C.appUrl || '').trim();
   var $ = function(id){ return document.getElementById(id); };
   if (C.name) { $('appName').textContent = C.name; document.title = C.name; }
-  if (C.company) $('company').textContent = C.company;
+  
   $('foot').textContent = 'App shell ' + (C.shellVersion || '');
 
   function show(html){ $('bar').style.display = 'none'; var m = $('msg'); m.innerHTML = html; m.classList.add('show'); }

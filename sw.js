@@ -1,9 +1,9 @@
 /* HTS app shell — service worker.
    Keeps the shell (this page, icons, settings) on the phone so the icon opens instantly.
    The HTS app itself always loads live from Google, so data is never stale. */
-const CACHE = 'hts-shell-v1.0.0';
+const CACHE = 'hts-shell-v1.0.2';
 const SHELL = ['./', './index.html', './config.js', './manifest.webmanifest',
-  './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/favicon.png'];
+  './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/favicon.png', './img/bg.jpg', './img/logo-full.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
