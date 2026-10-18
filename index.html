@@ -108,15 +108,16 @@ window.addEventListener('appinstalled', function(){ hideInstall(false); });
 
 if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 </script>
-<!-- HTS opening animation (paste just ABOVE the last </body> line in index.html on GitHub) -->
+<!-- HTS opening animation (replace the old block, or paste just ABOVE the last </body> line in index.html on GitHub) -->
 <style>
 #htsIntro{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .45s}
-#htsIntro video{width:100%;height:100%;object-fit:contain;background:#000}
+#htsIntro video{width:100%;height:100%;object-fit:cover;background:#000}
 #htsIntro button{position:absolute;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:9px 16px;font:600 14px system-ui,sans-serif}
 </style>
-<div id="htsIntro"><video id="htsIntroV" src="https://healthtecchsolutions.in/media/hts-intro.mp4" muted playsinline autoplay preload="auto"></video><button id="htsIntroSkip">Skip &rsaquo;</button></div>
+<div id="htsIntro"><video id="htsIntroV" muted playsinline autoplay preload="auto"></video><button id="htsIntroSkip">Skip &rsaquo;</button></div>
 <script>
 (function(){var o=document.getElementById('htsIntro'),v=document.getElementById('htsIntroV'),done=false,started=false;
+v.src='https://healthtecchsolutions.in/media/'+(window.innerHeight>window.innerWidth?'hts-intro-v.mp4':'hts-intro.mp4');
 function close(){if(done)return;done=true;o.style.opacity='0';setTimeout(function(){o.remove();},460);}
 v.addEventListener('ended',close);v.addEventListener('error',close);document.getElementById('htsIntroSkip').onclick=close;
 v.addEventListener('playing',function(){started=true;});
