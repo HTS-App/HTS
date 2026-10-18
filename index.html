@@ -108,21 +108,29 @@ window.addEventListener('appinstalled', function(){ hideInstall(false); });
 
 if ('serviceWorker' in navigator) window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
 </script>
-<!-- HTS opening animation (replace the old block, or paste just ABOVE the last </body> line in index.html on GitHub) -->
+<!-- HTS opening animation v3 (replace the old block: from "<!-- HTS opening animation" to the last "</script>" above </body>) -->
 <style>
 #htsIntro{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .45s}
-#htsIntro video{width:100%;height:100%;object-fit:cover;background:#000}
+#htsIntro video{width:100%;height:100%;object-fit:contain;background:#000}
+#htsIntro video.v{object-fit:cover}
 #htsIntro button{position:absolute;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:9px 16px;font:600 14px system-ui,sans-serif}
 </style>
 <div id="htsIntro"><video id="htsIntroV" muted playsinline autoplay preload="auto"></video><button id="htsIntroSkip">Skip &rsaquo;</button></div>
 <script>
-(function(){var o=document.getElementById('htsIntro'),v=document.getElementById('htsIntroV'),done=false,started=false;
-v.src='https://healthtecchsolutions.in/media/'+(window.innerHeight>window.innerWidth?'hts-intro-v.mp4':'hts-intro.mp4');
-function close(){if(done)return;done=true;o.style.opacity='0';setTimeout(function(){o.remove();},460);}
-v.addEventListener('ended',close);v.addEventListener('error',close);document.getElementById('htsIntroSkip').onclick=close;
+(function(){var o=document.getElementById('htsIntro'),v=document.getElementById('htsIntroV'),done=false,started=false,cur='';
+var BASE='https://healthtecchsolutions.in/media/';
+function want(){return window.innerHeight>=window.innerWidth?'v':'h';}
+function load(){var w=want();if(w===cur)return;var t=v.currentTime||0;cur=w;
+  v.className=(w==='v'?'v':'');v.src=BASE+(w==='v'?'hts-intro-v.mp4':'hts-intro.mp4');
+  if(t){v.addEventListener('loadedmetadata',function f(){v.removeEventListener('loadedmetadata',f);try{v.currentTime=t;}catch(e){}});}
+  var p=v.play();if(p&&p.catch)p.catch(function(){});}
+function close(){if(done)return;done=true;window.removeEventListener('resize',onR);o.style.opacity='0';setTimeout(function(){o.remove();},460);}
+var rt=null;function onR(){clearTimeout(rt);rt=setTimeout(load,250);}
+window.addEventListener('resize',onR);
+v.addEventListener('ended',close);v.addEventListener('error',function(){if(!started)close();});document.getElementById('htsIntroSkip').onclick=close;
 v.addEventListener('playing',function(){started=true;});
-setTimeout(function(){if(!started)close();},6000);setTimeout(close,13000);
-var p=v.play();if(p&&p.catch)p.catch(close);})();
+setTimeout(function(){if(!started)close();},6000);setTimeout(close,14000);
+load();})();
 </script>
 </body>
 </html>
